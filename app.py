@@ -34,6 +34,7 @@ def check_guess(guess, secret):
         return "Win", "🎉 Correct!"
 
     try:
+        # FIXME: hint messages are backwards ("Too High" tells the player to go HIGHER)
         if guess > secret:
             return "Too High", "📈 Go HIGHER!"
         else:
@@ -132,6 +133,7 @@ with col3:
     show_hint = st.checkbox("Show hint", value=True)
 
 if new_game:
+    # FIXME: status is never reset, so after a win/loss the game stays stopped
     st.session_state.attempts = 0
     st.session_state.secret = random.randint(1, 100)
     st.success("New game started.")

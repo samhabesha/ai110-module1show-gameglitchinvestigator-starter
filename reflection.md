@@ -14,7 +14,9 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| | | | |
+| Secret 82, guess 81 | Hint says go HIGHER | Hint says "Go LOWER" (opposite) | No error. Suspect `check_guess` in app.py lines 37–40 |
+| Secret 82, guess 95 | Hint says go LOWER | Hint says "Go HIGHER" (opposite) | No error. Same function: messages swapped |
+| Win a game, then click "New Game" | A fresh game I can play | Still says "You already won", can't guess again | No error. Suspect the New Game block in app.py (~line 135): `status` is never reset |
 | | | | |
 | | | | |
 

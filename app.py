@@ -32,7 +32,7 @@ if "secret" not in st.session_state:
     st.session_state.secret = random.randint(low, high)
 
 if "attempts" not in st.session_state:
-    st.session_state.attempts = 1
+    st.session_state.attempts = 0  # FIXED: was 1, so the first game lost an attempt before any guess
 
 if "score" not in st.session_state:
     st.session_state.score = 0
@@ -46,7 +46,7 @@ if "history" not in st.session_state:
 st.subheader("Make a guess")
 
 st.info(
-    f"Guess a number between 1 and 100. "
+    f"Guess a number between {low} and {high}. "
     f"Attempts left: {attempt_limit - st.session_state.attempts}"
 )
 
@@ -71,9 +71,12 @@ with col3:
     show_hint = st.checkbox("Show hint", value=True)
 
 if new_game:
-    # FIXME: status is never reset, so after a win/loss the game stays stopped
+    # FIXED: reset every piece of game state (status was left as "won"/"lost", which stopped the game)
+    st.session_state.status = "playing"
+    st.session_state.history = []
+    st.session_state.score = 0
     st.session_state.attempts = 0
-    st.session_state.secret = random.randint(1, 100)
+    st.session_state.secret = random.randint(low, high)  # use the current difficulty's range, not always 1-100
     st.success("New game started.")
     st.rerun()
 
@@ -95,12 +98,9 @@ if submit:
     else:
         st.session_state.history.append(guess_int)
 
-        if st.session_state.attempts % 2 == 0:
-            secret = str(st.session_state.secret)
-        else:
-            secret = st.session_state.secret
-
-        outcome, message = check_guess(guess_int, secret)
+        # FIXED: on every even attempt the secret was turned into a string, so the guess was
+        # compared as text ("9" > "82" is True). Always compare numbers.
+        outcome, message = check_guess(guess_int, st.session_state.secret)
 
         if show_hint:
             st.warning(message)

@@ -42,11 +42,12 @@ It wrote the code, ran away, and now the game is unplayable.
 
 Describe your fixed game in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. Start the app with `python -m streamlit run app.py`. Difficulty is Normal, and the info box says "Guess a number between 1 and 100".
+2. Open "Developer Debug Info": the secret is 47.
+3. Enter a guess of 60. The game says "Too High" and the hint says "📉 Go LOWER!".
+4. Enter a guess of 40. The hint says "📈 Go HIGHER!".
+5. Enter a guess of 47. The game shows "You won!" with balloons and the final score.
+6. Click "New Game". A fresh game starts with a new secret, attempts reset, and new guesses are accepted.
 
 **Screenshot** *(optional)*: <!-- Insert a screenshot of your fixed, winning game here -->
 
